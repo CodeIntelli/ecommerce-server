@@ -1,12 +1,7 @@
 // package calling
 import express from "express";
 const app = express();
-import {
-  APP_PORT,
-  CLOUD_NAME,
-  CLOUD_API_KEY,
-  CLOUD_API_SECRET,
-} from "./config";
+import { CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET } from "./config";
 import {
   productRoutes,
   orderRoutes,
@@ -24,6 +19,7 @@ app.use(
     credentials: true,
   })
 );
+require("dotenv").config({ path: "./config.env" });
 
 import cloudinary from "cloudinary";
 import bodyParser from "body-parser";
@@ -53,7 +49,7 @@ cloudinary.config({
   api_secret: CLOUD_API_SECRET,
 });
 
-let server = app.listen(APP_PORT, () => {
+let server = app.listen(process.env.PORT || 3000, () => {
   console.log("Server Connected");
 });
 
